@@ -9,11 +9,12 @@ const Login = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onSubmitHandler = async (event) => {
+        event.preventDefault();
+        setLoading(true);
         try {
-            event.preventDefault();
-
             const payload =
                 state === "login"
                     ? { email, password }
@@ -42,6 +43,8 @@ const Login = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -115,8 +118,21 @@ const Login = () => {
                         </span>
                     </p>
                 )}
-                <button className="bg-primary hover:bg-primary-dull transition-all text-white w-full py-2 rounded-md cursor-pointer">
-                    {state === "register" ? "Create Account" : "Login"}
+                <button
+                    disabled={loading}
+                    className={`bg-primary text-white w-full py-2 rounded-md cursor-pointer transition-all flex justify-center items-center ${
+                        loading
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-primary-dull"
+                    }`}
+                >
+                    {loading
+                        ? state === "login"
+                            ? "Logging in..."
+                            : "Creating..."
+                        : state === "login"
+                        ? "Login"
+                        : "Create Account"}
                 </button>
             </form>
         </div>
