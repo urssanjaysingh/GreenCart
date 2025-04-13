@@ -12,9 +12,9 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     const onSubmitHandler = async (event) => {
-        event.preventDefault();
-        setLoading(true);
         try {
+            event.preventDefault();
+            setLoading(true);
             const payload =
                 state === "login"
                     ? { email, password }

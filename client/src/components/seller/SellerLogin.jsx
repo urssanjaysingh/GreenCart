@@ -9,9 +9,9 @@ const SellerLogin = () => {
     const [loading, setLoading] = useState(false);
 
     const onSubmitHandler = async (event) => {
-        event.preventDefault();
-        setLoading(true);
         try {
+            event.preventDefault();
+            setLoading(true);
             const { data } = await axios.post("/api/user/login", {
                 email,
                 password,

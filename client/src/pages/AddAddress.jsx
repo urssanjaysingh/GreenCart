@@ -58,7 +58,7 @@ const AddAddress = () => {
                 toast.error("Something went wrong");
             }
         } finally {
-            setLoading(true);
+            setLoading(false);
         }
     };
 
