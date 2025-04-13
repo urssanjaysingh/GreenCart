@@ -14,13 +14,13 @@ import { stripeWebhooks } from "./controllers/orderController.js";
 import { PORT } from "./config/index.js";
 
 const app = express();
-const port = PORT || 4000;
+const port = PORT || 10000;
 
 await connectDB();
 await connectCloudinary();
 
 // Allow multiple origins
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["https://greencart-8d9l.onrender.com/"];
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
@@ -40,5 +40,5 @@ app.use("/api/order", orderRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
