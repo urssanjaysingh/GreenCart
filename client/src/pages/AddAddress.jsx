@@ -30,6 +30,7 @@ const AddAddress = () => {
         country: "",
         phone: "",
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,6 +44,7 @@ const AddAddress = () => {
     const onSubmitHandler = async (e) => {
         try {
             e.preventDefault();
+            setLoading(true);
             const { data } = await axios.post("/api/address/add", { address });
 
             if (data.success) {
@@ -55,6 +57,8 @@ const AddAddress = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLoading(true);
         }
     };
 
@@ -150,8 +154,14 @@ const AddAddress = () => {
                             placeholder="Phone"
                         />
 
-                        <button className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase">
-                            Save Address
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className={`w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase ${
+                                loading ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                        >
+                            {loading ? "Saving..." : "Save Address"}
                         </button>
                     </form>
                 </div>
