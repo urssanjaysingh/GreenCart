@@ -6,10 +6,12 @@ const SellerLogin = () => {
     const { seller, setSeller, navigate, axios } = useAppContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onSubmitHandler = async (event) => {
+        event.preventDefault();
+        setLoading(true);
         try {
-            event.preventDefault();
             const { data } = await axios.post("/api/user/login", {
                 email,
                 password,
@@ -29,6 +31,8 @@ const SellerLogin = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -70,8 +74,16 @@ const SellerLogin = () => {
                             required
                         />
                     </div>
-                    <button className="bg-primary text-white w-full py-2 rounded-md cursor-pointer">
-                        Login
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`bg-primary text-white w-full py-2 rounded-md cursor-pointer transition-all flex justify-center items-center ${
+                            loading
+                                ? "opacity-50 cursor-not-allowed"
+                                : "hover:bg-primary-dull"
+                        }`}
+                    >
+                        {loading ? "Logging in..." : "Login"}
                     </button>
                 </div>
 
