@@ -5,6 +5,8 @@ import { assets, dummyOrders } from "../../assets/assets";
 const Orders = () => {
     const { currency, axios } = useAppContext();
     const [orders, setOrders] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
 
     const fetchOrders = async () => {
         try {
@@ -19,6 +21,31 @@ const Orders = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        }
+    };
+
+    const confirmDelete = (orderId) => {
+        setSelectedOrderId(orderId);
+        setShowModal(true);
+    };
+
+    const handleDelete = async () => {
+        try {
+            const { data } = await axios.delete(
+                `/api/order/${selectedOrderId}`
+            );
+            if (data.success) {
+                toast.success(data.message);
+                setOrders((prev) =>
+                    prev.filter((o) => o._id !== selectedOrderId)
+                );
+                setShowModal(false);
+            }
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Failed to delete the order"
+            );
+            setShowModal(false);
         }
     };
 
@@ -86,9 +113,44 @@ const Orders = () => {
                             </p>
                             <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
                         </div>
+
+                        <button
+                            onClick={() => confirmDelete(order._id)}
+                            className="text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition text-sm md:text-base"
+                        >
+                            Delete
+                        </button>
                     </div>
                 ))}
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-[90%] max-w-md shadow-lg">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                            Confirm Deletion
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Are you sure you want to delete this order? This
+                            action cannot be undone.
+                        </p>
+                        <div className="flex justify-end gap-4">
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
