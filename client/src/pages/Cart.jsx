@@ -22,6 +22,7 @@ const Cart = () => {
     const [showAddress, setShowAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [paymentOption, setPaymentOption] = useState("COD");
+    const [loading, setLoading] = useState(false);
 
     const getCart = () => {
         let tempArray = [];
@@ -57,6 +58,7 @@ const Cart = () => {
             if (!selectedAddress) {
                 toast.error("Please select an address");
             }
+            setLoading(true);
 
             // Place Order with COD
             if (paymentOption === "COD") {
@@ -93,6 +95,8 @@ const Cart = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -313,9 +317,14 @@ const Cart = () => {
                 {user ? (
                     <button
                         onClick={placeOrder}
-                        className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition"
+                        disabled={loading}
+                        className={`w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition ${
+                            loading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                     >
-                        {paymentOption === "COD"
+                        {loading
+                            ? "Processing..."
+                            : paymentOption === "COD"
                             ? "Place Order"
                             : "Proceed to Checkout"}
                     </button>
