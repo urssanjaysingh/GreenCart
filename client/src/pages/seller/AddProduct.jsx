@@ -12,10 +12,12 @@ const AddProduct = () => {
     const [category, setCategory] = useState("");
     const [price, setPrice] = useState("");
     const [offerPrice, setOfferPrice] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onSubmitHandler = async (event) => {
         try {
             event.preventDefault();
+            setLoading(true);
 
             const productData = {
                 name,
@@ -49,6 +51,8 @@ const AddProduct = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -181,8 +185,13 @@ const AddProduct = () => {
                         />
                     </div>
                 </div>
-                <button className="px-8 py-2.5 bg-primary text-white font-medium rounded cursor-pointer">
-                    ADD
+                <button
+                    className={`px-8 py-2.5 bg-primary text-white font-medium rounded cursor-pointer ${
+                        loading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={loading}
+                >
+                    {loading ? "Adding..." : "ADD"}
                 </button>
             </form>
         </div>
