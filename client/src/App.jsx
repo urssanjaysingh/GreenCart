@@ -18,6 +18,7 @@ import AddProduct from "./pages/seller/AddProduct";
 import ProductList from "./pages/seller/ProductList";
 import Orders from "./pages/seller/Orders";
 import Loading from "./components/Loading";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
     const isSellerPath = useLocation().pathname.includes("seller");
@@ -65,6 +66,7 @@ const App = () => {
                         <Route path="orders" element={<Orders />} />
                     </Route>
                     <Route path="/seller-login" element={<SellerLogin />} />
+                    <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </div>
             {!isSellerPath && <Footer />}
