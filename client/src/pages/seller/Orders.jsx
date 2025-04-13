@@ -116,7 +116,7 @@ const Orders = () => {
 
                         <button
                             onClick={() => confirmDelete(order._id)}
-                            className="text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition text-sm md:text-base"
+                            className="text-red-500 cursor-pointer border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition text-sm md:text-base"
                         >
                             Delete
                         </button>
@@ -137,13 +137,13 @@ const Orders = () => {
                         <div className="flex justify-end gap-4">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+                                className="px-4 py-2 cursor-pointer rounded-md border border-gray-300 hover:bg-gray-100 transition"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleDelete}
-                                className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
+                                className="px-4 py-2 cursor-pointer rounded-md bg-red-500 text-white hover:bg-red-600 transition"
                             >
                                 Delete
                             </button>
