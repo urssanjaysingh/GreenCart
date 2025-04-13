@@ -20,7 +20,7 @@ await connectDB();
 await connectCloudinary();
 
 // Allow multiple origins
-const allowedOrigins = ["https://greencart-8d9l.onrender.com/"];
+const allowedOrigins = ["https://greencart-8d9l.onrender.com"];
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
