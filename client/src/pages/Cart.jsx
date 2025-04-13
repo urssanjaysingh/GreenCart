@@ -310,14 +310,23 @@ const Cart = () => {
                     </p>
                 </div>
 
-                <button
-                    onClick={placeOrder}
-                    className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition"
-                >
-                    {paymentOption === "COD"
-                        ? "Place Order"
-                        : "Proceed to Checkout"}
-                </button>
+                {user ? (
+                    <button
+                        onClick={placeOrder}
+                        className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition"
+                    >
+                        {paymentOption === "COD"
+                            ? "Place Order"
+                            : "Proceed to Checkout"}
+                    </button>
+                ) : (
+                    <button
+                        disabled
+                        className="w-full py-3 mt-6 bg-gray-300 text-gray-600 font-medium cursor-not-allowed"
+                    >
+                        Login to proceed
+                    </button>
+                )}
             </div>
         </div>
     ) : null;

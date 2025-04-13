@@ -31,8 +31,6 @@ export const AppContextProvider = ({ children }) => {
         } catch (error) {
             if (error.response && error.response.data) {
                 toast.error(error.response.data.message);
-            } else {
-                toast.error("Something went wrong");
             }
         }
     };
