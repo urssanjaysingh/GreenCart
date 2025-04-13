@@ -8,6 +8,7 @@ const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const fetchOrders = async () => {
         try {
@@ -31,6 +32,7 @@ const Orders = () => {
     };
 
     const handleDelete = async () => {
+        setIsDeleting(true);
         try {
             const { data } = await axios.delete(
                 `/api/order/${selectedOrderId}`
@@ -40,12 +42,13 @@ const Orders = () => {
                 setOrders((prev) =>
                     prev.filter((o) => o._id !== selectedOrderId)
                 );
-                setShowModal(false);
             }
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Failed to delete the order"
             );
+        } finally {
+            setIsDeleting(false);
             setShowModal(false);
         }
     };
@@ -144,9 +147,14 @@ const Orders = () => {
                             </button>
                             <button
                                 onClick={handleDelete}
-                                className="px-4 py-2 cursor-pointer rounded-md bg-red-500 text-white hover:bg-red-600 transition"
+                                disabled={isDeleting}
+                                className={`px-4 py-2 cursor-pointer rounded-md bg-red-500 text-white transition ${
+                                    isDeleting
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : "hover:bg-red-600"
+                                }`}
                             >
-                                Delete
+                                {isDeleting ? "Deleting..." : "Delete"}
                             </button>
                         </div>
                     </div>
