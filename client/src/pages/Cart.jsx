@@ -56,7 +56,14 @@ const Cart = () => {
     const placeOrder = async () => {
         try {
             if (!selectedAddress) {
-                toast.info("Please select an address");
+                toast("Please Select an Address", {
+                    icon: "ℹ️",
+                    style: {
+                        background: "#2d9cdb", // blue
+                        color: "#fff",
+                    },
+                });
+                return;
             }
             setLoading(true);
 
