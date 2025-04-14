@@ -250,3 +250,26 @@ export const deleteOrderById = asyncHandler(async (req, res, next) => {
         message: "Order deleted successfully",
     });
 });
+
+//! Change Order Status: /api/order/:orderId [PATCH]
+export const changeOrderStatus = asyncHandler(async (req, res, next) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+        return next(new CustomError(400, "Invalid status"));
+    }
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+        return next(new CustomError(404, "Order not found"));
+    }
+
+    await Order.findByIdAndUpdate(orderId, { status });
+
+    res.status(200).json({
+        success: true,
+        message: "Order status updated successfully",
+    });
+});

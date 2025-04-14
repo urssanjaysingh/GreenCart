@@ -53,6 +53,29 @@ const Orders = () => {
         }
     };
 
+    const handleStatusChange = async (orderId, newStatus) => {
+        try {
+            const { data } = await axios.patch(`/api/order/${orderId}`, {
+                status: newStatus,
+            });
+
+            if (data.success) {
+                toast.success("Status updated");
+                setOrders((prevOrders) =>
+                    prevOrders.map((order) =>
+                        order._id === orderId
+                            ? { ...order, status: newStatus }
+                            : order
+                    )
+                );
+            }
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Failed to update status"
+            );
+        }
+    };
+
     useEffect(() => {
         fetchOrders();
     }, []);
@@ -116,6 +139,36 @@ const Orders = () => {
                                 {new Date(order.createdAt).toLocaleDateString()}
                             </p>
                             <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
+
+                            <div className="mt-2">
+                                <label
+                                    htmlFor={`status-${order._id}`}
+                                    className="block font-medium text-black/80 mb-1"
+                                >
+                                    Status:
+                                </label>
+                                <select
+                                    id={`status-${order._id}`}
+                                    value={order.status}
+                                    onChange={(e) =>
+                                        handleStatusChange(
+                                            order._id,
+                                            e.target.value
+                                        )
+                                    }
+                                    className="border border-gray-300 rounded px-2 py-1"
+                                >
+                                    <option value="Order Placed">
+                                        Order Placed
+                                    </option>
+                                    <option value="Processing">
+                                        Processing
+                                    </option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
                         </div>
 
                         <button
