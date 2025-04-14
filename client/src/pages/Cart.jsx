@@ -57,9 +57,8 @@ const Cart = () => {
         try {
             if (!selectedAddress) {
                 toast("Please Select an Address", {
-                    icon: "ℹ️",
                     style: {
-                        background: "#2d9cdb", // blue
+                        background: "#2d9cdb",
                         color: "#fff",
                     },
                 });
