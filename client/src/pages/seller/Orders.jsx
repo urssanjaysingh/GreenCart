@@ -125,18 +125,19 @@ const Orders = () => {
                             {/* Address Info */}
                             <div className="text-sm md:text-base text-black/60 w-full xl:w-1/4">
                                 <p className="text-black/80">
-                                    {order.address.firstName}{" "}
-                                    {order.address.lastName}
+                                    {order.address?.firstName}{" "}
+                                    {order.address?.lastName}
                                 </p>
                                 <p>
-                                    {order.address.street}, {order.address.city}
+                                    {order.address?.street},{" "}
+                                    {order.address?.city}
                                 </p>
                                 <p>
-                                    {order.address.state},{" "}
-                                    {order.address.zipcode},{" "}
-                                    {order.address.country}
+                                    {order.address?.state},{" "}
+                                    {order.address?.zipcode},{" "}
+                                    {order.address?.country}
                                 </p>
-                                <p>{order.address.phone}</p>
+                                <p>{order.address?.phone}</p>
                             </div>
 
                             {/* Amount */}
