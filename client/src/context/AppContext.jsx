@@ -22,8 +22,11 @@ export const AppContextProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
 
+    const [isProductsLoading, setIsProductsLoading] = useState(true);
+
     const fetchProducts = async () => {
         try {
+            setIsProductsLoading(true);
             const { data } = await axios.get("/api/product/list");
 
             if (data.success) {
@@ -33,6 +36,8 @@ export const AppContextProvider = ({ children }) => {
             if (error.response && error.response.data) {
                 toast.error(error.response.data.message);
             }
+        } finally {
+            setIsProductsLoading(false);
         }
     };
 
@@ -161,6 +166,7 @@ export const AppContextProvider = ({ children }) => {
         fetchProducts,
         redirectPath,
         setRedirectPath,
+        isProductsLoading,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
