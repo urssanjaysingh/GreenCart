@@ -101,3 +101,36 @@ export const changeStock = asyncHandler(async (req, res, next) => {
         updatedProduct,
     });
 });
+
+//! Delete Product: /api/product/:id
+
+export const deleteProduct = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+    if (!product) {
+        return next(new CustomError(404, "Product not found"));
+    }
+
+    // Delete product images from Cloudinary
+    try {
+        await Promise.all(
+            product.image.map(async (url) => {
+                // Extract public ID from the image URL
+                const publicId = url.split("/").pop().split(".")[0];
+                await cloudinary.uploader.destroy(publicId, {
+                    resource_type: "image",
+                });
+            })
+        );
+    } catch (error) {
+        console.error("Cloudinary deletion error:", error.message);
+    }
+
+    await Product.findByIdAndDelete(id);
+
+    res.status(200).json({
+        success: true,
+        message: "Product deleted successfully",
+    });
+});

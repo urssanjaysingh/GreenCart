@@ -4,6 +4,7 @@ import { authenticate, authorize } from "./../middlewares/authMiddleware.js";
 import {
     addProduct,
     changeStock,
+    deleteProduct,
     getProductById,
     productList,
 } from "../controllers/productController.js";
@@ -20,5 +21,6 @@ productRouter.post(
 productRouter.get("/list", productList);
 productRouter.get("/:id", getProductById);
 productRouter.patch("/:id", authenticate, authorize, changeStock);
+productRouter.delete("/:id", authenticate, authorize, deleteProduct);
 
 export default productRouter;
