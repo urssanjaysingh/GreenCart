@@ -12,6 +12,7 @@ const Navbar = () => {
         user,
         setUser,
         setShowUserLogin,
+        setRedirectPath,
         navigate,
         searchQuery,
         setSearchQuery,
