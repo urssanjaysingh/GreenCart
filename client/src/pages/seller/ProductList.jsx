@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
 const ProductList = () => {
     const { products, currency, axios, fetchProducts } = useAppContext();
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const toggleStock = async (id, inStock) => {
         try {
@@ -23,19 +27,28 @@ const ProductList = () => {
         }
     };
 
-    const deleteProduct = async (id) => {
+    const confirmDelete = (id) => {
+        setSelectedProductId(id);
+        setShowModal(true);
+    };
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
         try {
-            const { data } = await axios.delete(`/api/product/${id}`);
+            const { data } = await axios.delete(
+                `/api/product/${selectedProductId}`
+            );
             if (data.success) {
                 toast.success(data.message);
                 fetchProducts();
             }
         } catch (error) {
-            if (error.response && error.response.data) {
-                toast.error(error.response.data.message);
-            } else {
-                toast.error("Something went wrong, Please try again.");
-            }
+            toast.error(
+                error.response?.data?.message || "Something went wrong"
+            );
+        } finally {
+            setIsDeleting(false);
+            setShowModal(false);
         }
     };
 
@@ -107,9 +120,9 @@ const ProductList = () => {
                                     <td className="px-4 py-3 hidden sm:table-cell">
                                         <button
                                             onClick={() =>
-                                                deleteProduct(product._id)
+                                                confirmDelete(product._id)
                                             }
-                                            className="text-xs px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                                            className="text-sm px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
                                         >
                                             Delete
                                         </button>
@@ -132,7 +145,7 @@ const ProductList = () => {
                             </span>
                             <button
                                 onClick={() => deleteProduct(product._id)}
-                                className="text-xs px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                                className="text-xs cursor-pointer px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
                             >
                                 Delete
                             </button>
@@ -140,6 +153,39 @@ const ProductList = () => {
                     ))}
                 </div>
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-[90%] max-w-md shadow-lg">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                            Confirm Deletion
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Are you sure you want to delete this product? This
+                            action cannot be undone.
+                        </p>
+                        <div className="flex justify-end gap-4">
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="px-4 py-2 cursor-pointer rounded-md border border-gray-300 hover:bg-gray-100 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                                className={`px-4 py-2 cursor-pointer rounded-md bg-red-500 text-white transition ${
+                                    isDeleting
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : "hover:bg-red-600"
+                                }`}
+                            >
+                                {isDeleting ? "Deleting..." : "Delete"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
