@@ -199,7 +199,11 @@ const Cart = () => {
                         </div>
                         <p className="text-center">
                             {currency}
-                            {product.offerPrice * product.quantity}
+                            {parseFloat(
+                                (product.offerPrice * product.quantity).toFixed(
+                                    2
+                                )
+                            )}
                         </p>
                         <button
                             onClick={() => removeFromCart(product._id)}
@@ -308,14 +312,21 @@ const Cart = () => {
                         <span>Tax (2%)</span>
                         <span>
                             {currency}
-                            {(getCartAmount() * 2) / 100}
+                            {parseFloat(
+                                ((getCartAmount() * 2) / 100).toFixed(2)
+                            )}
                         </span>
                     </p>
                     <p className="flex justify-between text-lg font-medium mt-3">
                         <span>Total Amount:</span>
                         <span>
                             {currency}
-                            {getCartAmount() + (getCartAmount() * 2) / 100}
+                            {parseFloat(
+                                (
+                                    getCartAmount() +
+                                    (getCartAmount() * 2) / 100
+                                ).toFixed(2)
+                            )}
                         </span>
                     </p>
                 </div>
