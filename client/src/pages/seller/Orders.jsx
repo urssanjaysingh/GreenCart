@@ -87,93 +87,80 @@ const Orders = () => {
                 {orders.map((order, index) => (
                     <div
                         key={index}
-                        className="flex flex-col md:items-center md:flex-row justify-between gap-5 p-5 max-w-4xl rounded-md border border-gray-300"
+                        className="flex flex-col lg:flex-row gap-5 lg:items-center justify-between p-5 border border-gray-300 rounded-md w-full"
                     >
-                        <div className="flex gap-5 max-w-80">
+                        <div className="flex gap-4 max-w-full lg:max-w-80 w-full">
                             <img
-                                className="w-12 h-12 object-cover"
+                                className="w-12 h-12 object-cover flex-shrink-0"
                                 src={assets.box_icon}
                                 alt="boxIcon"
                             />
-                            <div>
+                            <div className="flex-1">
                                 {order.items.map((item, index) => (
-                                    <div key={index} className="flex flex-col">
-                                        <p className="font-medium">
-                                            {item.product.name}{" "}
-                                            <span className="text-primary">
-                                                x {item.quantity}
-                                            </span>
-                                        </p>
-                                    </div>
+                                    <p
+                                        key={index}
+                                        className="text-sm font-medium"
+                                    >
+                                        {item.product.name}{" "}
+                                        <span className="text-primary">
+                                            x {item.quantity}
+                                        </span>
+                                    </p>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="text-sm md:text-base text-black/60">
+                        <div className="text-sm md:text-base text-black/60 w-full lg:w-1/4">
                             <p className="text-black/80">
                                 {order.address.firstName}{" "}
                                 {order.address.lastName}
                             </p>
-
                             <p>
-                                {order.address.street}, {order.address.city},{" "}
+                                {order.address.street}, {order.address.city}
                             </p>
-
                             <p>
-                                {order.address.state},{order.address.zipcode},{" "}
+                                {order.address.state}, {order.address.zipcode},{" "}
                                 {order.address.country}
                             </p>
-                            <p></p>
                             <p>{order.address.phone}</p>
                         </div>
 
-                        <p className="font-medium text-lg my-auto">
+                        <p className="font-medium text-lg w-full lg:w-fit text-center lg:text-left">
                             {currency}
                             {order.amount}
                         </p>
 
-                        <div className="flex flex-col text-sm md:text-base text-black/60">
-                            <p>Method: {order.paymentType}</p>
-                            <p>
-                                Date:{" "}
-                                {new Date(order.createdAt).toLocaleDateString()}
-                            </p>
-                            <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
-
-                            <div className="mt-2">
-                                <label
-                                    htmlFor={`status-${order._id}`}
-                                    className="block font-medium text-black/80 mb-1"
-                                >
-                                    Status:
-                                </label>
-                                <select
-                                    id={`status-${order._id}`}
-                                    value={order.status}
-                                    onChange={(e) =>
-                                        handleStatusChange(
-                                            order._id,
-                                            e.target.value
-                                        )
-                                    }
-                                    className="border border-gray-300 rounded px-2 py-1"
-                                >
-                                    <option value="Order Placed">
-                                        Order Placed
-                                    </option>
-                                    <option value="Processing">
-                                        Processing
-                                    </option>
-                                    <option value="Shipped">Shipped</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                </select>
-                            </div>
+                        <div className="w-full lg:w-1/5">
+                            <label
+                                htmlFor={`status-${order._id}`}
+                                className="block text-black/80 text-sm mb-1"
+                            >
+                                Status:
+                            </label>
+                            <select
+                                id={`status-${order._id}`}
+                                value={order.status}
+                                onChange={(e) =>
+                                    handleStatusChange(
+                                        order._id,
+                                        e.target.value
+                                    )
+                                }
+                                className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+                            >
+                                <option value="Order Placed">
+                                    Order Placed
+                                </option>
+                                <option value="Processing">Processing</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
                         </div>
 
                         <button
                             onClick={() => confirmDelete(order._id)}
-                            className="text-red-500 cursor-pointer border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition text-sm md:text-base"
+                            className="text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition w-full sm:w-auto"
                         >
                             Delete
                         </button>
