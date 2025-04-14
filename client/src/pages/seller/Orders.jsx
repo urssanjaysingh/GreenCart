@@ -105,17 +105,19 @@ const Orders = () => {
                                     alt="boxIcon"
                                 />
                                 <div className="flex-1">
-                                    {order.items.map((item, i) => (
-                                        <p
-                                            key={i}
-                                            className="text-sm font-medium"
-                                        >
-                                            {item.product.name}{" "}
-                                            <span className="text-primary">
-                                                x {item.quantity}
-                                            </span>
-                                        </p>
-                                    ))}
+                                    {order.items
+                                        .filter((item) => item.product)
+                                        .map((item, i) => (
+                                            <p
+                                                key={i}
+                                                className="text-sm font-medium"
+                                            >
+                                                {item.product.name}{" "}
+                                                <span className="text-primary">
+                                                    x {item.quantity}
+                                                </span>
+                                            </p>
+                                        ))}
                                 </div>
                             </div>
 
