@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { assets } from "../../assets/assets";
 import toast from "react-hot-toast";
 
 const SellerLayout = () => {
+    const [logoutLoading, setLogoutLoading] = useState(false);
+
     const { seller, setSeller, navigate, axios } = useAppContext();
 
     const sidebarLinks = [
@@ -17,6 +20,9 @@ const SellerLayout = () => {
     ];
 
     const logout = async () => {
+        if (logoutLoading) return;
+        setLogoutLoading(true);
+
         try {
             const { data } = await axios.delete("/api/user/logout");
             if (data.success) {
@@ -30,6 +36,8 @@ const SellerLayout = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLogoutLoading(false);
         }
     };
 
@@ -57,9 +65,12 @@ const SellerLayout = () => {
 
                     <button
                         onClick={logout}
-                        className="cursor-pointer px-4 py-1 border border-red-500 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition duration-300"
+                        disabled={logoutLoading}
+                        className={`cursor-pointer px-4 py-1 border border-red-500 text-red-500 rounded-full transition duration-300
+        hover:bg-red-500 hover:text-white
+        ${logoutLoading ? "opacity-50 pointer-events-none" : ""}`}
                     >
-                        Logout
+                        {logoutLoading ? "Logging out..." : "Logout"}
                     </button>
                 </div>
             </div>

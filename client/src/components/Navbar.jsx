@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 const Navbar = () => {
     const location = useLocation();
 
+    const [logoutLoading, setLogoutLoading] = useState(false);
+
     const [open, setOpen] = useState(false);
     const {
         user,
@@ -21,6 +23,9 @@ const Navbar = () => {
     } = useAppContext();
 
     const logout = async () => {
+        if (logoutLoading) return;
+        setLogoutLoading(true);
+
         try {
             const { data } = await axios.delete("/api/user/logout");
 
@@ -35,6 +40,8 @@ const Navbar = () => {
             } else {
                 toast.error("Something went wrong");
             }
+        } finally {
+            setLogoutLoading(false);
         }
     };
 
@@ -123,9 +130,13 @@ const Navbar = () => {
                             </li>
                             <li
                                 onClick={logout}
-                                className="p-1.5 pl-3 hover:bg-primary/10 cursor-pointer"
+                                className={`p-1.5 pl-3 hover:bg-primary/10 cursor-pointer ${
+                                    logoutLoading
+                                        ? "opacity-50 pointer-events-none"
+                                        : ""
+                                }`}
                             >
-                                Logout
+                                {logoutLoading ? "Logging out..." : "Logout"}
                             </li>
                         </ul>
                     </div>
@@ -195,9 +206,14 @@ const Navbar = () => {
                     ) : (
                         <button
                             onClick={logout}
-                            className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary-dull transition text-white rounded-full text-sm"
+                            disabled={logoutLoading}
+                            className={`cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary-dull transition text-white rounded-full text-sm ${
+                                logoutLoading
+                                    ? "opacity-50 pointer-events-none"
+                                    : ""
+                            }`}
                         >
-                            Logout
+                            {logoutLoading ? "Logging out..." : "Logout"}
                         </button>
                     )}
                 </div>
