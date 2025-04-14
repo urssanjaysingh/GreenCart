@@ -87,10 +87,10 @@ const Orders = () => {
                 {orders.map((order, index) => (
                     <div
                         key={index}
-                        className="flex flex-col lg:flex-row gap-5 lg:items-center justify-between p-5 border border-gray-300 rounded-md w-full"
+                        className="flex flex-col xl:flex-row gap-5 xl:items-center justify-between p-5 border border-gray-300 rounded-md w-full"
                     >
                         {/* Product Items */}
-                        <div className="flex gap-4 max-w-full lg:max-w-80 w-full">
+                        <div className="flex gap-4 max-w-full xl:max-w-80 w-full">
                             <img
                                 className="w-12 h-12 object-cover flex-shrink-0"
                                 src={assets.box_icon}
@@ -112,7 +112,7 @@ const Orders = () => {
                         </div>
 
                         {/* Address Info */}
-                        <div className="text-sm md:text-base text-black/60 w-full lg:w-1/4">
+                        <div className="text-sm md:text-base text-black/60 w-full xl:w-1/4">
                             <p className="text-black/80">
                                 {order.address.firstName}{" "}
                                 {order.address.lastName}
@@ -128,13 +128,13 @@ const Orders = () => {
                         </div>
 
                         {/* Amount */}
-                        <p className="font-medium text-lg w-full lg:w-fit text-center lg:text-left">
+                        <p className="font-medium text-lg w-full xl:w-fit text-center xl:text-left">
                             {currency}
                             {order.amount}
                         </p>
 
                         {/* Payment & Status */}
-                        <div className="flex flex-col text-sm md:text-base text-black/60 w-full lg:w-1/5">
+                        <div className="flex flex-col text-sm md:text-base text-black/60 w-full xl:w-1/5">
                             <p>Method: {order.paymentType}</p>
                             <p>
                                 Date:{" "}
