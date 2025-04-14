@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { assets } from "../../assets/assets";
 import toast from "react-hot-toast";
+import Loader from "../../components/Loader";
 
 const Orders = () => {
     const { currency, axios } = useAppContext();
@@ -88,7 +89,7 @@ const Orders = () => {
                 <h2 className="text-lg font-medium">Orders List</h2>
 
                 {isLoading ? (
-                    <p className="text-gray-600 mt-4">Loading orders...</p>
+                    <Loader />
                 ) : orders.length === 0 ? (
                     <p className="text-gray-600 mt-4">No orders found.</p>
                 ) : (
