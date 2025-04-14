@@ -198,7 +198,7 @@ const Orders = () => {
                             {/* Delete Button */}
                             <button
                                 onClick={() => confirmDelete(order._id)}
-                                className="text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition w-full sm:w-auto"
+                                className="text-red-500 border cursor-pointer border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition w-full sm:w-auto"
                             >
                                 Delete
                             </button>
