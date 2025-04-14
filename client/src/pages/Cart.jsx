@@ -344,7 +344,11 @@ const Cart = () => {
                 )}
             </div>
         </div>
-    ) : null;
+    ) : (
+        <div className="mt-16 text-center text-gray-500">
+            Your cart is empty.
+        </div>
+    );
 };
 
 export default Cart;
