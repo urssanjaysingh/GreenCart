@@ -3,7 +3,14 @@ import toast from "react-hot-toast";
 import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
-    const { setShowUserLogin, setUser, axios, navigate } = useAppContext();
+    const {
+        setShowUserLogin,
+        setUser,
+        axios,
+        navigate,
+        redirectPath,
+        setRedirectPath,
+    } = useAppContext();
 
     const [state, setState] = useState("login");
     const [name, setName] = useState("");
@@ -35,7 +42,8 @@ const Login = () => {
                 setEmail("");
                 setPassword("");
                 setName("");
-                navigate("/");
+                navigate(redirectPath || "/");
+                setRedirectPath("/");
             }
         } catch (error) {
             if (error.response && error.response.data) {

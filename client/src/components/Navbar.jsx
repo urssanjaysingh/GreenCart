@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { assets } from "./../assets/assets";
 import { useAppContext } from "./../context/AppContext";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
+    const location = useLocation();
+
     const [open, setOpen] = useState(false);
     const {
         user,
@@ -96,7 +98,10 @@ const Navbar = () => {
 
                 {!user ? (
                     <button
-                        onClick={() => setShowUserLogin(true)}
+                        onClick={() => {
+                            setRedirectPath(location.pathname);
+                            setShowUserLogin(true);
+                        }}
                         className="cursor-pointer text-sm md:text-base px-5 md:px-8 py-1.5 md:py-2 lg:px-7 lg:py-2 bg-primary hover:bg-primary-dull transition text-white rounded-full"
                     >
                         Login
@@ -178,6 +183,7 @@ const Navbar = () => {
                     {!user ? (
                         <button
                             onClick={() => {
+                                setRedirectPath(location.pathname);
                                 setOpen(false);
                                 setShowUserLogin(true);
                             }}
