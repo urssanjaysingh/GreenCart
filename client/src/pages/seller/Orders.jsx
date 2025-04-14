@@ -89,6 +89,7 @@ const Orders = () => {
                         key={index}
                         className="flex flex-col lg:flex-row gap-5 lg:items-center justify-between p-5 border border-gray-300 rounded-md w-full"
                     >
+                        {/* Product Items */}
                         <div className="flex gap-4 max-w-full lg:max-w-80 w-full">
                             <img
                                 className="w-12 h-12 object-cover flex-shrink-0"
@@ -110,6 +111,7 @@ const Orders = () => {
                             </div>
                         </div>
 
+                        {/* Address Info */}
                         <div className="text-sm md:text-base text-black/60 w-full lg:w-1/4">
                             <p className="text-black/80">
                                 {order.address.firstName}{" "}
@@ -125,39 +127,54 @@ const Orders = () => {
                             <p>{order.address.phone}</p>
                         </div>
 
+                        {/* Amount */}
                         <p className="font-medium text-lg w-full lg:w-fit text-center lg:text-left">
                             {currency}
                             {order.amount}
                         </p>
 
-                        <div className="w-full lg:w-1/5">
-                            <label
-                                htmlFor={`status-${order._id}`}
-                                className="block text-black/80 text-sm mb-1"
-                            >
-                                Status:
-                            </label>
-                            <select
-                                id={`status-${order._id}`}
-                                value={order.status}
-                                onChange={(e) =>
-                                    handleStatusChange(
-                                        order._id,
-                                        e.target.value
-                                    )
-                                }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
-                            >
-                                <option value="Order Placed">
-                                    Order Placed
-                                </option>
-                                <option value="Processing">Processing</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
+                        {/* Payment & Status */}
+                        <div className="flex flex-col text-sm md:text-base text-black/60 w-full lg:w-1/5">
+                            <p>Method: {order.paymentType}</p>
+                            <p>
+                                Date:{" "}
+                                {new Date(order.createdAt).toLocaleDateString()}
+                            </p>
+                            <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
+
+                            {/* Status Select */}
+                            <div className="mt-2">
+                                <label
+                                    htmlFor={`status-${order._id}`}
+                                    className="block text-black/80 mb-1 text-sm"
+                                >
+                                    Status:
+                                </label>
+                                <select
+                                    id={`status-${order._id}`}
+                                    value={order.status}
+                                    onChange={(e) =>
+                                        handleStatusChange(
+                                            order._id,
+                                            e.target.value
+                                        )
+                                    }
+                                    className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+                                >
+                                    <option value="Order Placed">
+                                        Order Placed
+                                    </option>
+                                    <option value="Processing">
+                                        Processing
+                                    </option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
                         </div>
 
+                        {/* Delete Button */}
                         <button
                             onClick={() => confirmDelete(order._id)}
                             className="text-red-500 border border-red-500 px-3 py-1 rounded-md hover:bg-red-100 transition w-full sm:w-auto"
