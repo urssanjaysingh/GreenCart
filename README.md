@@ -1,6 +1,6 @@
-# 🌱 GreenCart - Your Organic Shopping Destination 🌱
+# 🛒 GreenCart - Your Grocery Shopping Destination
 
-Welcome to **GreenCart**! Your one-stop solution for purchasing fresh and organic products. 🌿
+Welcome to **GreenCart**! Your one-stop solution for shopping a wide range of fresh and daily essential grocery items. From organic produce to household staples, we've got everything you need in one place! 🥦🥫🍞
 
 ## 🚀 Live Demo
 
@@ -10,11 +10,11 @@ Welcome to **GreenCart**! Your one-stop solution for purchasing fresh and organi
 
 ## 🛍️ Features
 
--   **Browse & Search**: Easily explore a variety of organic products 🌾
+-   **Browse & Search**: Easily explore a variety of grocery products 🌾
 -   **Add to Cart**: Seamlessly add items to your cart 🛒
 -   **User Authentication**: Secure login and registration 💻🔐
 -   **Secure Checkout**: Fast and safe payment process 💳
--   **Admin Dashboard**: Manage products and users as an admin ⚙️
+-   **Seller Dashboard**: Manage products and orders as a seller/vendor ⚙️
 -   **Profile Management**: Update your personal details 👤
 
 ---
